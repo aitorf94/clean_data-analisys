@@ -1,0 +1,135 @@
+---
+title: |
+  | Tipologia i cicle de vida de les dades 
+  | Pràctica 2. Neteja i anàlisi de dades
+  | Solució
+author: |
+  | Aitor Ferrus Blasco [aferrus]
+  | Alonso López i Vicente [alopezvic]
+date: '`r format(Sys.Date(),"%e de %B, %Y")`'
+  output:
+  pdf_document:
+    toc: yes
+    toc_depth: 3
+  html_document:
+    toc: yes
+    toc_depth: 3
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+\newpage
+
+# 1. Descripció del dataset.
+Perquè és important i quina pregunta/problema pretén respondre?
+
+**Resposta**
+
+El nostre dataset conté aproximadament deu anys d'observacions meteorològiques diàries des de molts llocs d'Austràlia.
+La pregunta que pretén respondre és si l'endemà va a ploure o no?
+La importància del dataset resideix en el nombre d'observacions presses durant 10 anys en les diferents regions de Austrlia, totes aquestes observacions són molt útils si desitgem crear un model per a predir l'oratge i així saber si l'endemà va a ploure o no?
+
+Conèixer la previsió de l'oratge és fonamental per a moltes activitats humanes. Activitats d'oci com anar de càmping, jugar al futbol o anar a la platja. Activitats relacionades amb el treball de les persones, com per exemple els agricultors o els obrers. En definitiva, saber si l'endemà va a ploure o no és essencial en la nostra vida i aquest dataset conte totes les dades necessàries per a crear un model més o menys acurat.
+
+
+```{r carrega de fitxer}
+# Aquest codi pot anar en aquest apartat o el seguent ? ja que tan sols estem lleguint el fitxer
+
+# Llegim el fitxer
+df <- read.csv(file="../data/weatherAUS.csv",
+               header = TRUE)
+# Guardem el dataset original per accedir i comprovar diferències
+df_original <- df
+
+# Observem les 5 primeres files 
+head(df)
+```
+
+El nostre data conte 23 columnes:
+
+Date: La data d’observació.
+Location: El nom comú de la ubicació de l’estació meteorològica.
+MinTemp: La temperatura mínima en graus centígrads.
+MaxTemp: La temperatura màxima en graus centígrads.
+Rainfall: La quantitat de precipitacions registrades durant el dia en mm. 
+Evaporation: L’anomenada evaporació de "pan" de classe A (mm) durant les 24 hores fins a les 9 del matí.
+Sunshine: El nombre d’hores de sol al dia.
+WindGustDir: La direcció de la ratxa de vent més forta de les 24 hores a mitjanit.
+WindGustSpeed: La velocitat (km / h) de la ratxa de vent més forta de les 24 hores a mitjanit.
+WindDir9am: Direcció del vent a les 9h.
+WindDir3pm: Direcció del vent a les 15h.
+WindSpeed9am: La velocitat mitjana del vent (km / h) durant 10 minuts abans de les 9 del matí.
+WindSpeed3pm: La velocitat mitjana del vent (km / h) durante 10 minuts abans de les 15:00
+Humidity9am: Humitat (percentatge) a les 9 del matí.
+Humidity3pm: Humidity (percent) at 3pm.
+Pressure9am: La pressió atmosfèrica (hpa) reduida fins al nivell mitjà del mar a les 9:00
+Pressure3pm: La pressió atmosfèrica (hpa) reduida fins al nivell mitjà del mar a les 15:00
+Cloud9am: Fracció de cel enfosquida pel núvol a les 9 del matí. Això es mesura en "oktas", que són una unitat de vuitens. Enregistra quants vuitens del cel estan ocultes pel núvol. Una mesura 0 indica un cel completament clar, mentre que un 8 indica que està completament ennuvolat.
+Cloud3pm:Fracció de cel enfosquida pel núvol a les 15:00 Això es mesura en "oktas", que són una unitat de vuitens. Enregistra quants vuitens del cel estan ocultes pel núvol. Una mesura 0 indica un cel completament clar, mentre que un 8 indica que està completament ennuvolat.
+Temp9am: Temperatura (graus C) a les 9 del matí
+Temp3pm: Temperatura (graus C) a les 3 de la tarda
+RainToday: Booleà: 1 si la precipitació (mm) durant les 24 hores a les 9:00 supera l'1 mm, en cas contrari, 0
+RainTomorrow: La quantitat de pluja del dia següent en mm. S’utilitza per crear la variable de resposta RainTomorrow. Una mena de mesura del "risc".
+
+
+
+# 2. Integració i selecció de les dades d’interès a analitzar.
+
+**Resposta**
+
+La integració de les dades al nostre dataset és innecesaria, ja que no tenim diverses fonts, perquè totes les dades es troben al mateix arxiu CSV "weatherAUS.csv". En el cas que aquesta fase fóra necessària perquè el nombre de fonts fóra més que una deuríem d'integrar les dades en un dataframe utilitzant per exemple els següents comands en R:
+
+full_data_set<-merge(df1, df2, by.x="surname", by.y="name")
+
+o
+
+full_data_set<-rbind(df1,df2)
+
+Respecte a la selecció és una de les primeres etapes en el preprocessat, en aquesta etapa hem de seleccionar les dades d'interès. Al nostre cas totes les dades són d'interès en aquest moment, és possible que mes endavant ens adonem que hi ha certes variables que tenen molt poc o gens de effecte amb la predicció així que si aquest fora el cas les eliminaríem/exclouríem del nostre dataframe.
+
+# 3. Neteja de les dades
+
+## 3.1. Les dades contenen zeros o elements buits? Com gestionaries aquests casos?
+
+**Resposta**
+
+## 3.2. Identificació i tractament de valors extrems.
+
+**Resposta**
+
+# 4. Anàlisi de les dades.
+
+## 4.1. Selecció dels grups de dades que es volen analitzar/comparar (planificació dels anàlisis a aplicar).
+
+**Resposta**
+
+## 4.2. Comprovació de la normalitat i homogeneïtat de la variància.
+
+**Resposta**
+
+## 4.3. Aplicació de proves estadístiques per comparar els grups de dades. En funció de les dades i de l’objectiu de l’estudi, aplicar proves de contrast d’hipòtesis, correlacions, regressions, etc. Aplicar almenys tres mètodes d’anàlisi diferents.
+
+**Resposta**
+
+# 5. Representació dels resultats a partir de taules i gràfiques.
+
+**Resposta**
+
+# 6. Resolució del problema. A partir dels resultats obtinguts, quines són les conclusions? Els resultats permeten respondre al problema?
+
+**Resposta**
+
+# 7. Codi: Cal adjuntar el codi, preferiblement en R, amb el que s’ha realitzat la neteja, anàlisi i representació de les dades. Si ho preferiu, també podeu treballar en Python.
+
+**Resposta**
+
+# 8. Contribucions
+
+|Contribucions|Firma|
+|---------------------|----------------------------------------------------------------------|
+| Investigació prèvia | Aitor Ferrus Blasco, Alonso López i Vicente |
+|Redacció de les respostes | Aitor Ferrus Blasco, Alonso López i Vicente |
+|Desenvolupament codi | Aitor Ferrus Blasco, Alonso López i Vicente |
