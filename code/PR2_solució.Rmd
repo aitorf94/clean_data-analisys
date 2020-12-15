@@ -48,7 +48,7 @@ df_original <- df
 head(df)
 ```
 
-El nostre data conte 23 columnes:
+El nostre dataset conte 23 columnes:
 
 Date: La data d’observació.
 Location: El nom comú de la ubicació de l’estació meteorològica.
@@ -90,11 +90,45 @@ full_data_set<-rbind(df1,df2)
 
 Respecte a la selecció és una de les primeres etapes en el preprocessat, en aquesta etapa hem de seleccionar les dades d'interès. Al nostre cas totes les dades són d'interès en aquest moment, és possible que mes endavant ens adonem que hi ha certes variables que tenen molt poc o gens de effecte amb la predicció així que si aquest fora el cas les eliminaríem/exclouríem del nostre dataframe.
 
+Reduccio?
+
+En aquests apartat podríem fer els dos tipus de reduccions el de dimensionalitat utilitza'n el PCA (prcomp).
+I el de quantitat, ja que el nombre de dades que tenim és molt gran.
+
+No està especificat a l'enunciat però hem sembla que si volem podem fer-ho.
+
 # 3. Neteja de les dades
 
 ## 3.1. Les dades contenen zeros o elements buits? Com gestionaries aquests casos?
 
+```{r Exercici 3.1 - Verifiquem que les dades no tenen valors null}
+# Verifiquem que les dades no tenen valors nulls
+sort(colMeans(is.na(df)), decreasing = TRUE)
+```
+
+
+
 **Resposta**
+
+Si, les dades contenen elements buits en totes les columnes excepte Date i Location. Podem elegir entre eliminar qualsevol fila que contingui una dada buida (degut al nombre de dades pot ser una bona idea). O podem utilitzar les funcions Knn o missforest o qualsevol altra funció amb la finalitat d'imputar els valors perduts.
+
+```{r Exercici 3.1 - Neteja dades NA}
+# Eliminem les files que contenen NA
+df <- df[complete.cases(df),]
+
+# Verifiquem que les dades no tenen valors nulls
+sort(colMeans(is.na(df)), decreasing = TRUE)
+dim(df)
+```
+
+o 
+
+```{r Exercici 3.1 - Neteja dades NA}
+# Imputem valors, utilitzem package VIM i funció kNN.
+library(VIM)
+df_complet <- kNN(df)
+df <- df_complet[0:23]
+```
 
 ## 3.2. Identificació i tractament de valors extrems.
 
