@@ -1,0 +1,231 @@
+---
+title: "| Tipologia i cicle de vida de les dades \n| Pràctica 2. Neteja i anàlisi
+  de dades\n| Solució\n"
+author: |
+  | Aitor Ferrus Blasco [aferrus]
+  | Alonso López i Vicente [alopezvic]
+date: "05/01/2021"
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: 3
+  html_document:
+    toc: yes
+    toc_depth: 3
+  '': default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+\newpage
+
+# 1. Descripció del dataset.
+Perquè és important i quina pregunta/problema pretén respondre?
+
+**Resposta**
+
+El dataset que hem escollit és *Rain in Australia* (https://www.kaggle.com/jsphyg/weather-dataset-rattle-package). 
+
+Conté 10 anys de dades d'observacions diàries del clima en diferents llocs d'Australia. Conté una variable objectiu (RainTomorrow) per predir el temps del dia següent. Si la variable és Yes indica que ha plogut el dia següent 1mm o més. Amb aquesta variable podem entrenar models per tal de predir si plourà el dia següent.
+
+Les variables que inclou el dataset són les següents:
+
+| Variable | Descripció |
+|---------------------|-----------------------------------------------------------------------------------|
+| Date | La data de l'observació |
+| Location | El nom de la localització de l'estació metereològica. |
+| MinTemp | La temperatura mínima en graus Celsius |
+| MaxTemp | La temperatura màxima en graus Celsius |
+| Rainfall | La quantitat de pluja registrada durant el dia en mm |
+| Evaporation | La denominada Class A pan evaporation (mm) durant 24 hores a les 9am |
+| Sunshine | El nombre d'hores de sol durant el dia. |
+| WindGustDir | La direcció de la ratxa de vent més forta en les 24 hores fins la mitjanit |
+| WindGustSpeed | La velocitat (km/h) de la ratxa de vent més forta en les 24 hores fins a mitjanit |
+| WindDir9am |Direcció del vent a les 9am |
+| WindDir3pm |Direcció del vent a les 3pm |
+| WindSpeed9am | Mitjana de la Velocitat del vent (km/hr) 10 minuts abans de les 9am |
+| WindSpeed3pm | Mitjana de la Velocitat del vent (km/hr) 10 minuts abans de les 3pm |
+| Humidity9am | Humitat (percentatge) a les 9am |
+| Humidity3pm | Humitat (percentatge) a les 3pm |
+| Pressure9am | Pressió atmosfèrica (hpa) reduïda al nivell mitjà del mar a les 9am |
+| Pressure3pm | Pressió atmosfèrica (hpa) reduïda al nivell mitjà del mar a les 3pm |
+| Cloud9am | Fracció del cel enfosquida pels núvols a les 9am. Es mesura en "oktas", els quals són una unitat de vuitens. Registre quants hi ha |
+| Cloud3pm | Fracció del cel enfosquida pels núvols a les 3pm. Es mesura en "oktas", els quals són una unitat de vuits. Registre quants hi ha |
+| Temp9am | Temperatura (graus Celsius) a les 9am|
+| Temp3pm | Temperatura (graus Celsius) a les 3pm|
+| RainToday |Booleà: 1 si la precipitació (mm) en les 24 hours anteriors a les 9am és superior a 1mm, sinó 0 |
+| RainTomorrow | La quantitat de pluja al dia següent en mm. Utilitzada per crear la variable resposta RainTomorrow.  Un tipus de mesura del "risc". |
+
+# 2. Integració i selecció de les dades d’interès a analitzar.
+
+**Resposta**
+
+Hem seleccionat les dades de Melbourne, ja que tenen poques NA. Creiem que l'anàlisi que es pot realitzar en aquesta localització és pot adapatar ràpidament a qualsevol de les altres estacions que inclou el dataset.
+
+```{r carrega1}
+library(readr)
+weatherAUS <- read_csv("../data/weatherAUS.csv", 
+    col_types = cols(Date = col_date(format = "%Y-%m-%d"), 
+        Evaporation = col_double(), Sunshine = col_double()))
+weatherMelb <- weatherAUS[weatherAUS$Location == "Melbourne",]
+summary(weatherMelb)
+
+```
+
+# 3. Neteja de les dades
+
+## 3.1. Les dades contenen zeros o elements buits? Com gestionaries aquests casos?
+
+**Resposta**
+
+```{r valors nulls}
+# Verifiquem si les dades no tenen valors nulls
+sort(colMeans(is.na(weatherMelb)), decreasing = TRUE)
+```
+
+Les dades contenen elements buits en totes les columnes excepte Date i Location.
+Les columnes Cloud3pm , Cloud9am tenen mes de un 30% de valors nulls. Aixi que hem decidit que el nombre es molt gran i exclourem aquestes columnes del nostre dataset.
+
+```{r Eliminació Columnes Cloud3pm i Cloud9am}
+# Eliminem les  Columnes Cloud3pm i Cloud9am
+weatherMelb <- subset( weatherMelb, select = -c(Cloud3pm, Cloud9am ) )
+```
+
+```{r Imputació valors}
+# Imputem valors, utilitzem package VIM i funció kNN.
+library(VIM)
+weatherMelb_complet <- kNN(weatherMelb)
+weatherMelb <- weatherMelb_complet[0:21]
+```
+
+Hem utilitzat kNN per a imputar els valors perduts aixi que les nostres dades no deurien de tenir cap valor null. Ho confirmem:
+
+
+```{r Confirmació de eliminacio dels valors nulls}
+# Verifiquem que les dades no tenen valors nulls
+sort(colMeans(is.na(weatherMelb)), decreasing = TRUE)
+```
+## 3.2. Identificació i tractament de valors extrems.
+
+**Resposta**
+
+```{r val1}
+
+par(mfrow=c(1,4))
+boxplot(weatherMelb$MinTemp, na.rm=TRUE, main="Temp mínima")
+boxplot(weatherMelb$MaxTemp, na.rm=TRUE, main="Temp màxima")
+boxplot(weatherMelb$Rainfall, na.rm=TRUE, main="Pluja")
+boxplot(weatherMelb$Evaporation, na.rm=TRUE, main="Evaporació")
+
+```
+
+
+
+```{r val2}
+
+
+par(mfrow=c(1,4))
+boxplot(weatherMelb$Sunshine, na.rm=TRUE, main="Hores de sol")
+boxplot(weatherMelb$WindGustSpeed, na.rm=TRUE, main="Ratxa de vent més forta")
+boxplot(weatherMelb$WindSpeed9am, na.rm=TRUE, main="Vel. vent 10min abans 9am")
+boxplot(weatherMelb$WindSpeed3pm, na.rm=TRUE, main="Vel. vent 10min abans 3pm")
+
+```
+
+
+```{r val3}
+
+par(mfrow=c(1,4))
+boxplot(weatherMelb$Humidity9am, na.rm=TRUE, main="Humitat % a les 9am")
+boxplot(weatherMelb$Humidity3pm, na.rm=TRUE, main="Humitat % a les  3pm")
+boxplot(weatherMelb$Pressure9am, na.rm=TRUE, main=" Pres. atmos. a les 9am")
+boxplot(weatherMelb$Pressure3pm, na.rm=TRUE, main=" Pres. atmos. a les 3pm")
+```
+
+```{r val4}
+
+par(mfrow=c(1,2))
+boxplot(weatherMelb$Temp9am, na.rm=TRUE, main="Temperatura a les 9am")
+boxplot(weatherMelb$Temp3pm, na.rm=TRUE, main="Temperatura a les 3pm")
+```
+
+Correcció valors atípics de les columnes MinTemp, MaxTemp , Temp9am i Temp3pm. Dubte amb si deuríem de corregir les altres columnes?.
+
+
+```{r Correcció valors atípics- outliers}
+# Apliquem una simple funció per a substituir tots els valors superiors a 100 per NA
+weatherMelb$MinTemp <- sapply(weatherMelb$MinTemp, function(x) ifelse(x>25, NA, x))
+weatherMelb$MaxTemp <- sapply(weatherMelb$MaxTemp, function(x) ifelse(x>35, NA, x))
+weatherMelb$Temp9am <- sapply(weatherMelb$Temp9am, function(x) ifelse(x>25, NA, x))
+weatherMelb$Temp3pm <- sapply(weatherMelb$Temp3pm, function(x) ifelse(x>32, NA, x))
+
+
+```
+
+
+
+
+# 4. Anàlisi de les dades.
+
+## 4.1. Selecció dels grups de dades.
+Selecció dels grups de dades que es volen analitzar/comparar (planificació dels anàlisis a aplicar).
+
+**Resposta**
+
+Pendent. Cal establir quines dades utilitzarem per predir la pluja. Cerquem si una (o més) variables ens serveixen per contruir un model que predigui la pluja al dia següent. L'objectiu és determinar si hi ha una relació entre les variables.
+
+Aitor sugeriment:
+Podríem utilitzar la variable date per a crear una variable mesos. Aquesta variable mesos tindrà una gran correlació amb prediuré la pluja el dia seguent, ja que els mesos de pluja la probabilitat augmenta.
+La pressió atmosfèrica + humitat també ens ajudaran. Si la pressió baixa + la humitat augmenta, és un fet clar que una massa d'aire humida s'acosta i pot estar associada a un front de pluges.
+La evaporacio. Quan la massa d'aire no està saturada (humitat relativa del 100%) la quantitat d'aigua evaporada es compensa amb una quantitat d'aigua igual condensada.
+Un altre factor important és el vent, ja que l'aire fred no saturat absorbeix la humitat amb molta eficàcia.
+
+## 4.2. Comprovació de la normalitat i homogeneïtat de la variància.
+
+**Resposta**
+
+Utilitzem el test de Shapiro-Wilk per comprovar la normalitat. Si el pvalor és inferior a 0.05, el nivell de significació, podrem rebutjar la hipòtesi nul·la i concloure que les dades no tenen una distribució normal. En cas contrari, si el pvalor és major que 0.05 podrem concloure que les dades segueixen una distribució normal.
+
+```{r norm1}
+# Suposem que hem escollit la variable
+shapiro.test(weatherMelb$WindSpeed9am)
+
+```
+
+Per comprovar la homoscedasticitat, és a dir, la igualtat de variàncies, podem utilitzar el test de Levene si les dades segueixen una distribució normal, o el de Fligner-Killen si les dades no segueixen una distribució normal.
+
+```{r homo1}
+
+# Utilitzem Fligner-Killen perquè les dades no són normals.
+fligner.test(Rainfall ~ WindSpeed9am, data = weatherMelb)
+
+```
+
+## 4.3. Aplicació de proves estadístiques.
+Per comparar els grups de dades. En funció de les dades i de l’objectiu de l’estudi, aplicar proves de contrast d’hipòtesis, correlacions, regressions, etc. Aplicar almenys tres mètodes d’anàlisi diferents.
+
+**Resposta**
+
+# 5. Representació dels resultats.
+A partir de taules i gràfiques.
+
+**Resposta**
+
+# 6. Resolució del problema. 
+A partir dels resultats obtinguts, quines són les conclusions? Els resultats permeten respondre al problema?
+
+**Resposta**
+
+# 7. Codi.
+Cal adjuntar el codi, preferiblement en R, amb el que s’ha realitzat la neteja, anàlisi i representació de les dades. Si ho preferiu, també podeu treballar en Python.
+
+**Resposta**
+
+# 8. Contribucions
+
+|Contribucions|Firma|
+|---------------------|----------------------------------------------------------------------|
+| Investigació prèvia | Aitor Ferrus Blasco, Alonso López i Vicente |
+|Redacció de les respostes | Aitor Ferrus Blasco, Alonso López i Vicente |
+|Desenvolupament codi | Aitor Ferrus Blasco, Alonso López i Vicente |
