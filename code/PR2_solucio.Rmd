@@ -150,20 +150,43 @@ boxplot(weatherMelb$Temp9am, na.rm=TRUE, main="Temperatura a les 9am")
 boxplot(weatherMelb$Temp3pm, na.rm=TRUE, main="Temperatura a les 3pm")
 ```
 
-Correcció valors atípics de les columnes MinTemp, MaxTemp , Temp9am i Temp3pm. Dubte amb si deuríem de corregir les altres columnes?.
+Correcció valors atípics de les columnes MinTemp, MaxTemp , Temp9am i Temp3pm:
+Les temperatures màximes d'Austràlia en Melbourne, rarament passen de 30 graus Celsius i les temperatures mínimes rarament passen de 20 graus Celsius. Per aquesta raó hem decidit corregir els valors atípics de les columnes MinTemp, MaxTemp , Temp9am i Temp3pm.
 
+També corregim els valors atípics de la columna Evaporation. Al cap de l'any Australia té una mitja de 1200 mm així que si dividim entre 365 ens ix a 3.2.. Els nombres solen ser majors en estiu i primavera i menors en la tardor i l'hivern. Així que observant el boxplot les dades superiors al 12mm semblen ser dades errònies i per tant les hem de corregir.
+
+
+Pel que fa a les variables WindGustSpeed, WindSpeed9am i WindSpeed3pm. És veritat que podem observar certs outliers però, no crec que siguin dades errònies. Australia és un país que sofreix de tornados cada any sobretot en les àrees amb gran població com Melbourne així que entenc que aquestes dades foren extretes durant eixos dies puntuals.
+
+Pel que fa a les variables Humidity9am i Humidity3pm. És veritat que podem observar certs outliers, però, desprès d'investigar semblem dades que es poden donar Australia i en cap moment són dades errònies.
+
+Pel que fa a les variables Pressure9am i Pressure3pm. Com anteriorment, no tinc evidències de què aquest outliers siguin dades errònies per tant crec que no faria falta tractar-les.
 
 ```{r Correcció valors atípics- outliers}
-# Apliquem una simple funció per a substituir tots els valors superiors a 100 per NA
+# Apliquem una simple funció per a substituir tots els valors superiors per NA
+# MinTemp, MaxTemp , Temp9am i Temp3pm.
 weatherMelb$MinTemp <- sapply(weatherMelb$MinTemp, function(x) ifelse(x>25, NA, x))
 weatherMelb$MaxTemp <- sapply(weatherMelb$MaxTemp, function(x) ifelse(x>35, NA, x))
 weatherMelb$Temp9am <- sapply(weatherMelb$Temp9am, function(x) ifelse(x>25, NA, x))
 weatherMelb$Temp3pm <- sapply(weatherMelb$Temp3pm, function(x) ifelse(x>32, NA, x))
 
-
+# Evaporation
+weatherMelb$Evaporation <- sapply(weatherMelb$Evaporation, function(x) ifelse(x>12, NA, x))
 ```
 
 
+```{r Confirmació de eliminacio dels valors nulls 1}
+# Verifiquem percentaje de valors nulls despres de tractar els outliers
+sort(colMeans(is.na(weatherMelb)), decreasing = TRUE)
+```
+
+
+```{r Imputació valors 2 }
+# Imputem valors, utilitzem package VIM i funció kNN.
+library(VIM)
+weatherMelb_complet <- kNN(weatherMelb)
+weatherMelb <- weatherMelb_complet[0:21]
+```
 
 
 # 4. Anàlisi de les dades.
