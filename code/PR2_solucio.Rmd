@@ -204,6 +204,38 @@ La pressió atmosfèrica + humitat també ens ajudaran. Si la pressió baixa + l
 La evaporacio. Quan la massa d'aire no està saturada (humitat relativa del 100%) la quantitat d'aigua evaporada es compensa amb una quantitat d'aigua igual condensada.
 Un altre factor important és el vent, ja que l'aire fred no saturat absorbeix la humitat amb molta eficàcia.
 
+
+```{r Anàlisi de les dades }
+# Podem veure quines variables tenen diferències significatives respecte RainTomorrow
+library(ggplot2)
+p <- ggplot(weatherMelb, aes(RainTomorrow,Humidity3pm))
+p + geom_boxplot()
+```
+```{r Anàlisi de les dades 1 }
+# Podem veure quines variables tenen diferències significatives respecte RainTomorrow
+p <- ggplot(weatherMelb, aes(RainTomorrow,Pressure3pm))
+p + geom_boxplot()
+```
+
+
+
+```{r Anàlisi de les dades 2 }
+# Podem veure quines variables tenen diferències significatives respecte RainTomorrow
+p <- ggplot(weatherMelb, aes(RainTomorrow,WindSpeed3pm))
+p + geom_boxplot()
+```
+
+```{r Anàlisi de les dades 3 }
+# Podem veure quines variables tenen diferències significatives respecte RainTomorrow
+p <- ggplot(weatherMelb, aes(RainTomorrow,Evaporation))
+p + geom_boxplot()
+```
+
+```{r Anàlisi de les dades 4 }
+# Podem veure quines variables tenen diferències significatives respecte RainTomorrow
+p <- ggplot(weatherMelb, aes(RainTomorrow,Sunshine))
+p + geom_boxplot()
+```
 ## 4.2. Comprovació de la normalitat i homogeneïtat de la variància.
 
 **Resposta**
