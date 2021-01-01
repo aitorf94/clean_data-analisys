@@ -1,0 +1,1041 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs}
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{Tipologia i cicle de vida de les dades\\
+Pràctica 2. Neteja i anàlisi de dades\\
+Solució}
+\author{Aitor Ferrus Blasco {[}aferrus{]}\\
+Alonso López i Vicente {[}alopezvic{]}}
+\date{05/01/2021}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+\newpage
+
+\hypertarget{descripciuxf3-del-dataset.}{%
+\section{1. Descripció del dataset.}\label{descripciuxf3-del-dataset.}}
+
+Perquè és important i quina pregunta/problema pretén respondre?
+
+\textbf{Resposta}
+
+El dataset que hem escollit és \emph{Rain in Australia}
+(\url{https://www.kaggle.com/jsphyg/weather-dataset-rattle-package}).
+
+Conté 10 anys de dades d'observacions diàries del clima en diferents
+llocs d'Australia. Conté una variable objectiu (RainTomorrow) per predir
+el temps del dia següent. Si la variable és Yes indica que ha plogut el
+dia següent 1mm o més. Amb aquesta variable podem entrenar models per
+tal de predir si plourà el dia següent.
+
+Les variables que inclou el dataset són les següents:
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.19\columnwidth}\raggedright
+Variable\strut
+\end{minipage} & \begin{minipage}[b]{0.75\columnwidth}\raggedright
+Descripció\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.19\columnwidth}\raggedright
+Date\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright
+La data de l'observació\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\raggedright
+Location\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright
+El nom de la localització de l'estació metereològica.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\raggedright
+MinTemp\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright
+La temperatura mínima en graus Celsius\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\raggedright
+MaxTemp\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright
+La temperatura màxima en graus Celsius\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\raggedright
+Rainfall\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright
+La quantitat de pluja registrada durant el dia en mm\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\raggedright
+Evaporation\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright
+La denominada Class A pan evaporation (mm) durant 24 hores a les
+9am\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\raggedright
+Sunshine\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright
+El nombre d'hores de sol durant el dia.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\raggedright
+WindGustDir\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright
+La direcció de la ratxa de vent més forta en les 24 hores fins la
+mitjanit\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\raggedright
+WindGustSpeed\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright
+La velocitat (km/h) de la ratxa de vent més forta en les 24 hores fins a
+mitjanit\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\raggedright
+WindDir9am\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright
+Direcció del vent a les 9am\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\raggedright
+WindDir3pm\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright
+Direcció del vent a les 3pm\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\raggedright
+WindSpeed9am\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright
+Mitjana de la Velocitat del vent (km/hr) 10 minuts abans de les
+9am\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\raggedright
+WindSpeed3pm\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright
+Mitjana de la Velocitat del vent (km/hr) 10 minuts abans de les
+3pm\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\raggedright
+Humidity9am\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright
+Humitat (percentatge) a les 9am\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\raggedright
+Humidity3pm\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright
+Humitat (percentatge) a les 3pm\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\raggedright
+Pressure9am\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright
+Pressió atmosfèrica (hpa) reduïda al nivell mitjà del mar a les
+9am\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\raggedright
+Pressure3pm\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright
+Pressió atmosfèrica (hpa) reduïda al nivell mitjà del mar a les
+3pm\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\raggedright
+Cloud9am\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright
+Fracció del cel enfosquida pels núvols a les 9am. Es mesura en
+``oktas'', els quals són una unitat de vuitens. Registre quants hi
+ha\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\raggedright
+Cloud3pm\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright
+Fracció del cel enfosquida pels núvols a les 3pm. Es mesura en
+``oktas'', els quals són una unitat de vuits. Registre quants hi
+ha\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\raggedright
+Temp9am\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright
+Temperatura (graus Celsius) a les 9am\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\raggedright
+Temp3pm\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright
+Temperatura (graus Celsius) a les 3pm\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\raggedright
+RainToday\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright
+Booleà: 1 si la precipitació (mm) en les 24 hours anteriors a les 9am és
+superior a 1mm, sinó 0\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\raggedright
+RainTomorrow\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright
+La quantitat de pluja al dia següent en mm. Utilitzada per crear la
+variable resposta RainTomorrow. Un tipus de mesura del ``risc''.\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+\hypertarget{integraciuxf3-i-selecciuxf3-de-les-dades-dinteruxe8s-a-analitzar.}{%
+\section{2. Integració i selecció de les dades d'interès a
+analitzar.}\label{integraciuxf3-i-selecciuxf3-de-les-dades-dinteruxe8s-a-analitzar.}}
+
+\textbf{Resposta}
+
+Hem seleccionat les dades de Melbourne, ja que tenen poques NA. Creiem
+que l'anàlisi que es pot realitzar en aquesta localització és pot
+adapatar ràpidament a qualsevol de les altres estacions que inclou el
+dataset.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(readr)}
+\NormalTok{weatherAUS <-}\StringTok{ }\KeywordTok{read_csv}\NormalTok{(}\StringTok{"../data/weatherAUS.csv"}\NormalTok{, }
+    \DataTypeTok{col_types =} \KeywordTok{cols}\NormalTok{(}\DataTypeTok{Date =} \KeywordTok{col_date}\NormalTok{(}\DataTypeTok{format =} \StringTok{"%Y-%m-%d"}\NormalTok{), }
+        \DataTypeTok{Evaporation =} \KeywordTok{col_double}\NormalTok{(), }\DataTypeTok{Sunshine =} \KeywordTok{col_double}\NormalTok{()))}
+\NormalTok{weatherMelb <-}\StringTok{ }\NormalTok{weatherAUS[weatherAUS}\OperatorTok{$}\NormalTok{Location }\OperatorTok{==}\StringTok{ "Melbourne"}\NormalTok{,]}
+\KeywordTok{summary}\NormalTok{(weatherMelb)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       Date              Location            MinTemp         MaxTemp     
+##  Min.   :2008-07-01   Length:3193        Min.   : 1.40   Min.   : 9.70  
+##  1st Qu.:2010-09-07   Class :character   1st Qu.: 8.70   1st Qu.:16.10  
+##  Median :2013-01-13   Mode  :character   Median :11.40   Median :19.50  
+##  Mean   :2013-01-02                      Mean   :11.78   Mean   :20.77  
+##  3rd Qu.:2015-04-19                      3rd Qu.:14.60   3rd Qu.:24.20  
+##  Max.   :2017-06-25                      Max.   :28.60   Max.   :46.40  
+##                                          NA's   :480     NA's   :481    
+##     Rainfall      Evaporation       Sunshine      WindGustDir       
+##  Min.   : 0.00   Min.   : 0.00   Min.   : 0.000   Length:3193       
+##  1st Qu.: 0.00   1st Qu.: 2.20   1st Qu.: 3.100   Class :character  
+##  Median : 0.00   Median : 4.00   Median : 6.500   Mode  :character  
+##  Mean   : 1.87   Mean   : 4.65   Mean   : 6.385                     
+##  3rd Qu.: 1.20   3rd Qu.: 6.40   3rd Qu.: 9.600                     
+##  Max.   :82.20   Max.   :23.80   Max.   :13.900                     
+##  NA's   :758     NA's   :3       NA's   :1                          
+##  WindGustSpeed     WindDir9am         WindDir3pm         WindSpeed9am  
+##  Min.   : 11.00   Length:3193        Length:3193        Min.   : 0.00  
+##  1st Qu.: 33.00   Class :character   Class :character   1st Qu.:11.00  
+##  Median : 43.00   Mode  :character   Mode  :character   Median :17.00  
+##  Mean   : 45.61                                         Mean   :19.13  
+##  3rd Qu.: 56.00                                         3rd Qu.:26.00  
+##  Max.   :122.00                                         Max.   :67.00  
+##  NA's   :14                                             NA's   :2      
+##   WindSpeed3pm   Humidity9am      Humidity3pm      Pressure9am    
+##  Min.   : 0.0   Min.   : 14.00   Min.   :  6.00   Min.   : 988.9  
+##  1st Qu.:15.0   1st Qu.: 58.00   1st Qu.: 41.00   1st Qu.:1012.6  
+##  Median :20.0   Median : 68.00   Median : 51.00   Median :1017.9  
+##  Mean   :22.1   Mean   : 67.55   Mean   : 51.18   Mean   :1017.6  
+##  3rd Qu.:28.0   3rd Qu.: 78.00   3rd Qu.: 61.00   3rd Qu.:1023.0  
+##  Max.   :76.0   Max.   :100.00   Max.   :100.00   Max.   :1039.0  
+##                 NA's   :482      NA's   :487      NA's   :480     
+##   Pressure3pm        Cloud9am        Cloud3pm        Temp9am     
+##  Min.   : 988.3   Min.   :0.000   Min.   :0.000   Min.   : 2.90  
+##  1st Qu.:1010.7   1st Qu.:3.000   1st Qu.:4.000   1st Qu.:11.28  
+##  Median :1016.1   Median :7.000   Median :6.000   Median :14.10  
+##  Mean   :1015.8   Mean   :5.314   Mean   :5.336   Mean   :14.60  
+##  3rd Qu.:1021.1   3rd Qu.:7.000   3rd Qu.:7.000   3rd Qu.:17.40  
+##  Max.   :1035.8   Max.   :8.000   Max.   :8.000   Max.   :35.50  
+##  NA's   :483      NA's   :1034    NA's   :1106    NA's   :481    
+##     Temp3pm       RainToday         RainTomorrow      
+##  Min.   : 7.20   Length:3193        Length:3193       
+##  1st Qu.:14.90   Class :character   Class :character  
+##  Median :18.20   Mode  :character   Mode  :character  
+##  Mean   :19.26                                        
+##  3rd Qu.:22.50                                        
+##  Max.   :45.40                                        
+##  NA's   :484
+\end{verbatim}
+
+\hypertarget{neteja-de-les-dades}{%
+\section{3. Neteja de les dades}\label{neteja-de-les-dades}}
+
+\hypertarget{les-dades-contenen-zeros-o-elements-buits-com-gestionaries-aquests-casos}{%
+\subsection{3.1. Les dades contenen zeros o elements buits? Com
+gestionaries aquests
+casos?}\label{les-dades-contenen-zeros-o-elements-buits-com-gestionaries-aquests-casos}}
+
+\textbf{Resposta}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Verifiquem si les dades no tenen valors nulls}
+\KeywordTok{sort}\NormalTok{(}\KeywordTok{colMeans}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(weatherMelb)), }\DataTypeTok{decreasing =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      Cloud3pm      Cloud9am      Rainfall     RainToday  RainTomorrow 
+##  0.3463827122  0.3238333855  0.2373943000  0.2373943000  0.2373943000 
+##   Humidity3pm       Temp3pm   Pressure3pm   Humidity9am       MaxTemp 
+##  0.1525211400  0.1515815847  0.1512683996  0.1509552145  0.1506420294 
+##       Temp9am       MinTemp   Pressure9am    WindDir9am   WindGustDir 
+##  0.1506420294  0.1503288443  0.1503288443  0.0156592546  0.0043845913 
+## WindGustSpeed    WindDir3pm   Evaporation  WindSpeed9am      Sunshine 
+##  0.0043845913  0.0037582211  0.0009395553  0.0006263702  0.0003131851 
+##          Date      Location  WindSpeed3pm 
+##  0.0000000000  0.0000000000  0.0000000000
+\end{verbatim}
+
+Les dades contenen elements buits en totes les columnes excepte Date i
+Location. Les columnes Cloud3pm , Cloud9am tenen mes de un 30\% de
+valors nulls. Aixi que hem decidit que el nombre es molt gran i
+exclourem aquestes columnes del nostre dataset.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Eliminem les  Columnes Cloud3pm i Cloud9am}
+\NormalTok{weatherMelb <-}\StringTok{ }\KeywordTok{subset}\NormalTok{( weatherMelb, }\DataTypeTok{select =} \OperatorTok{-}\KeywordTok{c}\NormalTok{(Cloud3pm, Cloud9am ) )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Imputem valors, utilitzem package VIM i funció kNN.}
+\KeywordTok{library}\NormalTok{(VIM)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: colorspace
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: grid
+\end{verbatim}
+
+\begin{verbatim}
+## VIM is ready to use.
+\end{verbatim}
+
+\begin{verbatim}
+## Suggestions and bug-reports can be submitted at: https://github.com/statistikat/VIM/issues
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'VIM'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:datasets':
+## 
+##     sleep
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{weatherMelb_complet <-}\StringTok{ }\KeywordTok{kNN}\NormalTok{(weatherMelb)}
+\NormalTok{weatherMelb <-}\StringTok{ }\NormalTok{weatherMelb_complet[}\DecValTok{0}\OperatorTok{:}\DecValTok{21}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+Hem utilitzat kNN per a imputar els valors perduts aixi que les nostres
+dades no deurien de tenir cap valor null. Ho confirmem:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Verifiquem que les dades no tenen valors nulls}
+\KeywordTok{sort}\NormalTok{(}\KeywordTok{colMeans}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(weatherMelb)), }\DataTypeTok{decreasing =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          Date      Location       MinTemp       MaxTemp      Rainfall 
+##             0             0             0             0             0 
+##   Evaporation      Sunshine   WindGustDir WindGustSpeed    WindDir9am 
+##             0             0             0             0             0 
+##    WindDir3pm  WindSpeed9am  WindSpeed3pm   Humidity9am   Humidity3pm 
+##             0             0             0             0             0 
+##   Pressure9am   Pressure3pm       Temp9am       Temp3pm     RainToday 
+##             0             0             0             0             0 
+##  RainTomorrow 
+##             0
+\end{verbatim}
+
+\hypertarget{identificaciuxf3-i-tractament-de-valors-extrems.}{%
+\subsection{3.2. Identificació i tractament de valors
+extrems.}\label{identificaciuxf3-i-tractament-de-valors-extrems.}}
+
+\textbf{Resposta}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{))}
+\KeywordTok{boxplot}\NormalTok{(weatherMelb}\OperatorTok{$}\NormalTok{MinTemp, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{main=}\StringTok{"Temp mínima"}\NormalTok{)}
+\KeywordTok{boxplot}\NormalTok{(weatherMelb}\OperatorTok{$}\NormalTok{MaxTemp, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{main=}\StringTok{"Temp màxima"}\NormalTok{)}
+\KeywordTok{boxplot}\NormalTok{(weatherMelb}\OperatorTok{$}\NormalTok{Rainfall, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{main=}\StringTok{"Pluja"}\NormalTok{)}
+\KeywordTok{boxplot}\NormalTok{(weatherMelb}\OperatorTok{$}\NormalTok{Evaporation, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{main=}\StringTok{"Evaporació")}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PR2_solucio_files/figure-latex/val1-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{))}
+\KeywordTok{boxplot}\NormalTok{(weatherMelb}\OperatorTok{$}\NormalTok{Sunshine, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{main=}\StringTok{"Hores de sol"}\NormalTok{)}
+\KeywordTok{boxplot}\NormalTok{(weatherMelb}\OperatorTok{$}\NormalTok{WindGustSpeed, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{main=}\StringTok{"Ratxa de vent més forta"}\NormalTok{)}
+\KeywordTok{boxplot}\NormalTok{(weatherMelb}\OperatorTok{$}\NormalTok{WindSpeed9am, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{main=}\StringTok{"Vel. vent 10min abans 9am"}\NormalTok{)}
+\KeywordTok{boxplot}\NormalTok{(weatherMelb}\OperatorTok{$}\NormalTok{WindSpeed3pm, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{main=}\StringTok{"Vel. vent 10min abans 3pm"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PR2_solucio_files/figure-latex/val2-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{))}
+\KeywordTok{boxplot}\NormalTok{(weatherMelb}\OperatorTok{$}\NormalTok{Humidity9am, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{main=}\StringTok{"Humitat % a les 9am"}\NormalTok{)}
+\KeywordTok{boxplot}\NormalTok{(weatherMelb}\OperatorTok{$}\NormalTok{Humidity3pm, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{main=}\StringTok{"Humitat % a les  3pm"}\NormalTok{)}
+\KeywordTok{boxplot}\NormalTok{(weatherMelb}\OperatorTok{$}\NormalTok{Pressure9am, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{main=}\StringTok{" Pres. atmos. a les 9am"}\NormalTok{)}
+\KeywordTok{boxplot}\NormalTok{(weatherMelb}\OperatorTok{$}\NormalTok{Pressure3pm, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{main=}\StringTok{" Pres. atmos. a les 3pm"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PR2_solucio_files/figure-latex/val3-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\KeywordTok{boxplot}\NormalTok{(weatherMelb}\OperatorTok{$}\NormalTok{Temp9am, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{main=}\StringTok{"Temperatura a les 9am"}\NormalTok{)}
+\KeywordTok{boxplot}\NormalTok{(weatherMelb}\OperatorTok{$}\NormalTok{Temp3pm, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{main=}\StringTok{"Temperatura a les 3pm"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PR2_solucio_files/figure-latex/val4-1.pdf}
+
+Correcció valors atípics de les columnes MinTemp, MaxTemp , Temp9am i
+Temp3pm: Les temperatures màximes d'Austràlia en Melbourne, rarament
+passen de 30 graus Celsius i les temperatures mínimes rarament passen de
+20 graus Celsius. Per aquesta raó hem decidit corregir els valors
+atípics de les columnes MinTemp, MaxTemp , Temp9am i Temp3pm.
+
+També corregim els valors atípics de la columna Evaporation. Al cap de
+l'any Australia té una mitja de 1200 mm així que si dividim entre 365
+ens ix a 3.2.. Els nombres solen ser majors en estiu i primavera i
+menors en la tardor i l'hivern. Així que observant el boxplot les dades
+superiors al 12mm semblen ser dades errònies i per tant les hem de
+corregir.
+
+Pel que fa a les variables WindGustSpeed, WindSpeed9am i WindSpeed3pm.
+És veritat que podem observar certs outliers però, no crec que siguin
+dades errònies. Australia és un país que sofreix de tornados cada any
+sobretot en les àrees amb gran població com Melbourne així que entenc
+que aquestes dades foren extretes durant eixos dies puntuals.
+
+Pel que fa a les variables Humidity9am i Humidity3pm. És veritat que
+podem observar certs outliers, però, desprès d'investigar semblem dades
+que es poden donar Australia i en cap moment són dades errònies.
+
+Pel que fa a les variables Pressure9am i Pressure3pm. Com anteriorment,
+no tinc evidències de què aquest outliers siguin dades errònies per tant
+crec que no faria falta tractar-les.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Apliquem una simple funció per a substituir tots els valors superiors per NA}
+\CommentTok{# MinTemp, MaxTemp , Temp9am i Temp3pm.}
+\NormalTok{weatherMelb}\OperatorTok{$}\NormalTok{MinTemp <-}\StringTok{ }\KeywordTok{sapply}\NormalTok{(weatherMelb}\OperatorTok{$}\NormalTok{MinTemp, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{ifelse}\NormalTok{(x}\OperatorTok{>}\DecValTok{25}\NormalTok{, }\OtherTok{NA}\NormalTok{, x))}
+\NormalTok{weatherMelb}\OperatorTok{$}\NormalTok{MaxTemp <-}\StringTok{ }\KeywordTok{sapply}\NormalTok{(weatherMelb}\OperatorTok{$}\NormalTok{MaxTemp, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{ifelse}\NormalTok{(x}\OperatorTok{>}\DecValTok{35}\NormalTok{, }\OtherTok{NA}\NormalTok{, x))}
+\NormalTok{weatherMelb}\OperatorTok{$}\NormalTok{Temp9am <-}\StringTok{ }\KeywordTok{sapply}\NormalTok{(weatherMelb}\OperatorTok{$}\NormalTok{Temp9am, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{ifelse}\NormalTok{(x}\OperatorTok{>}\DecValTok{25}\NormalTok{, }\OtherTok{NA}\NormalTok{, x))}
+\NormalTok{weatherMelb}\OperatorTok{$}\NormalTok{Temp3pm <-}\StringTok{ }\KeywordTok{sapply}\NormalTok{(weatherMelb}\OperatorTok{$}\NormalTok{Temp3pm, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{ifelse}\NormalTok{(x}\OperatorTok{>}\DecValTok{32}\NormalTok{, }\OtherTok{NA}\NormalTok{, x))}
+
+\CommentTok{# Evaporation}
+\NormalTok{weatherMelb}\OperatorTok{$}\NormalTok{Evaporation <-}\StringTok{ }\KeywordTok{sapply}\NormalTok{(weatherMelb}\OperatorTok{$}\NormalTok{Evaporation, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{ifelse}\NormalTok{(x}\OperatorTok{>}\DecValTok{12}\NormalTok{, }\OtherTok{NA}\NormalTok{, x))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Verifiquem percentaje de valors nulls despres de tractar els outliers}
+\KeywordTok{sort}\NormalTok{(}\KeywordTok{colMeans}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(weatherMelb)), }\DataTypeTok{decreasing =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Evaporation       Temp3pm       Temp9am       MaxTemp       MinTemp 
+##   0.036329471   0.031318509   0.027247103   0.023802067   0.003131851 
+##          Date      Location      Rainfall      Sunshine   WindGustDir 
+##   0.000000000   0.000000000   0.000000000   0.000000000   0.000000000 
+## WindGustSpeed    WindDir9am    WindDir3pm  WindSpeed9am  WindSpeed3pm 
+##   0.000000000   0.000000000   0.000000000   0.000000000   0.000000000 
+##   Humidity9am   Humidity3pm   Pressure9am   Pressure3pm     RainToday 
+##   0.000000000   0.000000000   0.000000000   0.000000000   0.000000000 
+##  RainTomorrow 
+##   0.000000000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Imputem valors, utilitzem package VIM i funció kNN.}
+\KeywordTok{library}\NormalTok{(VIM)}
+\NormalTok{weatherMelb_complet <-}\StringTok{ }\KeywordTok{kNN}\NormalTok{(weatherMelb)}
+\NormalTok{weatherMelb <-}\StringTok{ }\NormalTok{weatherMelb_complet[}\DecValTok{0}\OperatorTok{:}\DecValTok{21}\NormalTok{]}
+\NormalTok{weatherMelb_complet <-}\StringTok{ }\NormalTok{weatherMelb_complet[}\DecValTok{0}\OperatorTok{:}\DecValTok{21}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{anuxe0lisi-de-les-dades.}{%
+\section{4. Anàlisi de les dades.}\label{anuxe0lisi-de-les-dades.}}
+
+\hypertarget{selecciuxf3-dels-grups-de-dades.}{%
+\subsection{4.1. Selecció dels grups de
+dades.}\label{selecciuxf3-dels-grups-de-dades.}}
+
+Selecció dels grups de dades que es volen analitzar/comparar
+(planificació dels anàlisis a aplicar).
+
+\textbf{Resposta}
+
+Pendent. Cal establir quines dades utilitzarem per predir la pluja.
+Cerquem si una (o més) variables ens serveixen per contruir un model que
+predigui la pluja al dia següent. L'objectiu és determinar si hi ha una
+relació entre les variables.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Creació variable Month}
+\KeywordTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{weatherMelb <-}\StringTok{ }\NormalTok{weatherMelb }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{Month =}\NormalTok{ Date)}
+\NormalTok{weatherMelb}\OperatorTok{$}\NormalTok{Month<-}\StringTok{ }\KeywordTok{months}\NormalTok{(weatherMelb}\OperatorTok{$}\NormalTok{Month)}
+
+
+
+\CommentTok{#fifaNet <- fifaNet %>% mutate(Age_Int = case_when(Age<=20  ~ "Junior",}
+\CommentTok{#                                     Age>=21 & Age<=27   ~ "Middle",}
+\CommentTok{#                                     Age>=28   ~ "Senior",))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#  Creacio variable mesos}
+\NormalTok{col <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{6}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{13}\NormalTok{,}\DecValTok{14}\NormalTok{,}\DecValTok{15}\NormalTok{,}\DecValTok{16}\NormalTok{,}\DecValTok{17}\NormalTok{,}\DecValTok{21}\NormalTok{,}\DecValTok{22}\NormalTok{)}
+\NormalTok{weatherMelb <-}\StringTok{ }\NormalTok{weatherMelb[col]}
+\end{Highlighting}
+\end{Shaded}
+
+Hem seleccionat les següents variables: 1. Humidity 2. Presure 3.
+WindSpeed 4. Evaporation 5. Sunshine 6. Month
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Podem veure com afecten Humidity + Presure amb la probabilitat de pluja}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{ggplot}\NormalTok{(weatherMelb, }\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Humidity3pm , }\DataTypeTok{y =}\NormalTok{ Pressure3pm, }\DataTypeTok{color =}\NormalTok{ RainTomorrow) ) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_line}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PR2_solucio_files/figure-latex/Anàlisi de les dades - Humidity + Presure-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(weatherMelb, }\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Humidity9am , }\DataTypeTok{y =}\NormalTok{ Pressure9am, }\DataTypeTok{color =}\NormalTok{ RainTomorrow) ) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_line}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PR2_solucio_files/figure-latex/Anàlisi de les dades - Humidity + Presure-2.pdf}
+Si la pressió es baixa i la humitat és alta, és un fet clar que una
+massa d'aire humida s'acosta i pot estar associada a un front de pluges.
+Observant els gràfics podem assumir que el que hem dit abans és
+correcte.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Podem veure com afecten Humidity + WindSpeed amb la probabilitat de pluja}
+\KeywordTok{ggplot}\NormalTok{(weatherMelb, }\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Humidity3pm , }\DataTypeTok{y =}\NormalTok{ WindSpeed3pm, }\DataTypeTok{color =}\NormalTok{ RainTomorrow) ) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_line}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PR2_solucio_files/figure-latex/Anàlisi de les dades 2 - Humidity + WindSpeed-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(weatherMelb, }\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Humidity9am , }\DataTypeTok{y =}\NormalTok{ WindSpeed9am, }\DataTypeTok{color =}\NormalTok{ RainTomorrow) ) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_line}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PR2_solucio_files/figure-latex/Anàlisi de les dades 2 - Humidity + WindSpeed-2.pdf}
+Un altre factor important és el vent, ja que l'aire fred no saturat
+absorbeix la humitat amb molta eficàcia. Als gràfics mostrats
+prèviament, podem veure una tendència en la qual velocitats de vent
+petites amb mesures d'humitats petites donen lloc a la no pluja a
+l'endemà mentre que com més incrementem aquestes dues variables la
+probabilitat de pluja sembla augmentar considerablement.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Podem veure com afecten Humidity + Evaporation amb la probabilitat de pluja}
+\KeywordTok{ggplot}\NormalTok{(weatherMelb, }\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Humidity3pm , }\DataTypeTok{y =}\NormalTok{ Evaporation, }\DataTypeTok{color =}\NormalTok{ RainTomorrow) ) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_line}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PR2_solucio_files/figure-latex/Anàlisi de les dades 3 - Humidity + Evaporation-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(weatherMelb, }\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Humidity9am , }\DataTypeTok{y =}\NormalTok{ Evaporation, }\DataTypeTok{color =}\NormalTok{ RainTomorrow) ) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_line}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PR2_solucio_files/figure-latex/Anàlisi de les dades 3 - Humidity + Evaporation-2.pdf}
+Quan la massa d'aire no està saturada (humitat relativa del 100\%) la
+quantitat d'aigua evaporada es compensa amb una quantitat d'aigua igual
+condensada. En les nostres dades desafortunadament no tenim la humitat
+relativa i per tant no podem fer una comparació correcta. A més si
+observem la gràfica no hi ha cap relació entre la Evaporacio i humitat
+que provoqui l'augmente de les probabilitats de pluja a l'endemà tan
+sols podem observar que a més humitat registrada les probabilitats
+augmenten.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Podem veure com afecten Humidity + Sunshine amb la probabilitat de pluja}
+\KeywordTok{ggplot}\NormalTok{(weatherMelb, }\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Humidity3pm , }\DataTypeTok{y =}\NormalTok{ Sunshine, }\DataTypeTok{color =}\NormalTok{ RainTomorrow) ) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_line}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PR2_solucio_files/figure-latex/Anàlisi de les dades 4 - Humidity + Sunshine-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(weatherMelb, }\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Humidity9am , }\DataTypeTok{y =}\NormalTok{ Sunshine, }\DataTypeTok{color =}\NormalTok{ RainTomorrow) ) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_line}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PR2_solucio_files/figure-latex/Anàlisi de les dades 4 - Humidity + Sunshine-2.pdf}
+En aquest grafic podem observar que a mennys hores de sol i mes humitat,
+les probabiliyats de plutja al sandema augmenten, mentre que a mes hores
+de sol i menys humitat es probabiliyats de plutja al sandema
+disminuixen.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data=}\NormalTok{weatherMelb,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Month,}\DataTypeTok{fill=}\NormalTok{RainTomorrow))}\OperatorTok{+}\KeywordTok{geom_bar}\NormalTok{()}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.text.x =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{angle =} \DecValTok{45}\NormalTok{, }\DataTypeTok{hjust =} \DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PR2_solucio_files/figure-latex/Anàlisi de les dades 4 - Month-1.pdf}
+
+Amb el gràfic anterior podem concloure que en Melbourne no hi ha uns
+mesos específics de pluja, sembla que les precipitacions són similars al
+llarg de l'any durant els diferents mesos.
+
+\hypertarget{comprovaciuxf3-de-la-normalitat-i-homogeneuxeftat-de-la-variuxe0ncia.}{%
+\subsection{4.2. Comprovació de la normalitat i homogeneïtat de la
+variància.}\label{comprovaciuxf3-de-la-normalitat-i-homogeneuxeftat-de-la-variuxe0ncia.}}
+
+\textbf{Resposta}
+
+Utilitzem el test de Shapiro-Wilk per comprovar la normalitat. Si el
+pvalor és inferior a 0.05, el nivell de significació, podrem rebutjar la
+hipòtesi nul·la i concloure que les dades no tenen una distribució
+normal. En cas contrari, si el pvalor és major que 0.05 podrem concloure
+que les dades segueixen una distribució normal.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Utilitzem el test de Shapiro-Wilk per comprovar la normalitat de totes les variables cuantitatives}
+\KeywordTok{shapiro.test}\NormalTok{(weatherMelb_complet}\OperatorTok{$}\NormalTok{MinTemp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  weatherMelb_complet$MinTemp
+## W = 0.99356, p-value = 1.061e-10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{shapiro.test}\NormalTok{(weatherMelb_complet}\OperatorTok{$}\NormalTok{MaxTemp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  weatherMelb_complet$MaxTemp
+## W = 0.95622, p-value < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{shapiro.test}\NormalTok{(weatherMelb_complet}\OperatorTok{$}\NormalTok{Rainfall)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  weatherMelb_complet$Rainfall
+## W = 0.36727, p-value < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{shapiro.test}\NormalTok{(weatherMelb_complet}\OperatorTok{$}\NormalTok{Evaporation)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  weatherMelb_complet$Evaporation
+## W = 0.95253, p-value < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{shapiro.test}\NormalTok{(weatherMelb_complet}\OperatorTok{$}\NormalTok{Sunshine)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  weatherMelb_complet$Sunshine
+## W = 0.95924, p-value < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{shapiro.test}\NormalTok{(weatherMelb_complet}\OperatorTok{$}\NormalTok{WindGustSpeed)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  weatherMelb_complet$WindGustSpeed
+## W = 0.9667, p-value < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{shapiro.test}\NormalTok{(weatherMelb_complet}\OperatorTok{$}\NormalTok{WindSpeed9am)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  weatherMelb_complet$WindSpeed9am
+## W = 0.93527, p-value < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{shapiro.test}\NormalTok{(weatherMelb_complet}\OperatorTok{$}\NormalTok{WindSpeed3pm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  weatherMelb_complet$WindSpeed3pm
+## W = 0.97805, p-value < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{shapiro.test}\NormalTok{(weatherMelb_complet}\OperatorTok{$}\NormalTok{Humidity9am)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  weatherMelb_complet$Humidity9am
+## W = 0.98611, p-value < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{shapiro.test}\NormalTok{(weatherMelb_complet}\OperatorTok{$}\NormalTok{Humidity3pm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  weatherMelb_complet$Humidity3pm
+## W = 0.99309, p-value = 3.151e-11
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{shapiro.test}\NormalTok{(weatherMelb_complet}\OperatorTok{$}\NormalTok{Pressure9am)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  weatherMelb_complet$Pressure9am
+## W = 0.9946, p-value = 1.843e-09
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{shapiro.test}\NormalTok{(weatherMelb_complet}\OperatorTok{$}\NormalTok{Pressure3pm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  weatherMelb_complet$Pressure3pm
+## W = 0.99645, p-value = 7.431e-07
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{shapiro.test}\NormalTok{(weatherMelb_complet}\OperatorTok{$}\NormalTok{Temp9am)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  weatherMelb_complet$Temp9am
+## W = 0.99434, p-value = 8.793e-10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{shapiro.test}\NormalTok{(weatherMelb_complet}\OperatorTok{$}\NormalTok{Temp3pm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  weatherMelb_complet$Temp3pm
+## W = 0.96944, p-value < 2.2e-16
+\end{verbatim}
+
+Cap de les variables segueix una distribució normal. El pvalor calculat
+és inferior a 0.05, el nivell de significació, així que podem rebutjar
+la hipòtesi nul·la i concloure que les dades no tenen una distribució
+normal.
+
+Per comprovar la homoscedasticitat, és a dir, la igualtat de variàncies,
+podem utilitzar el test de Levene si les dades segueixen una distribució
+normal, o el de Fligner-Killen si les dades no segueixen una distribució
+normal.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Utilitzem Fligner-Killen perquè les dades no són normals.}
+\KeywordTok{fligner.test}\NormalTok{(Rainfall }\OperatorTok{~}\StringTok{ }\NormalTok{WindSpeed9am, }\DataTypeTok{data =}\NormalTok{ weatherMelb_complet)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Fligner-Killeen test of homogeneity of variances
+## 
+## data:  Rainfall by WindSpeed9am
+## Fligner-Killeen:med chi-squared = 106.03, df = 36, p-value = 7.973e-09
+\end{verbatim}
+
+\hypertarget{aplicaciuxf3-de-proves-estaduxedstiques.}{%
+\subsection{4.3. Aplicació de proves
+estadístiques.}\label{aplicaciuxf3-de-proves-estaduxedstiques.}}
+
+Per comparar els grups de dades. En funció de les dades i de l'objectiu
+de l'estudi, aplicar proves de contrast d'hipòtesis, correlacions,
+regressions, etc. Aplicar almenys tres mètodes d'anàlisi diferents.
+
+\textbf{Resposta}
+
+\hypertarget{representaciuxf3-dels-resultats.}{%
+\section{5. Representació dels
+resultats.}\label{representaciuxf3-dels-resultats.}}
+
+A partir de taules i gràfiques.
+
+\textbf{Resposta}
+
+\hypertarget{resoluciuxf3-del-problema.}{%
+\section{6. Resolució del problema.}\label{resoluciuxf3-del-problema.}}
+
+A partir dels resultats obtinguts, quines són les conclusions? Els
+resultats permeten respondre al problema?
+
+\textbf{Resposta}
+
+\hypertarget{codi.}{%
+\section{7. Codi.}\label{codi.}}
+
+Cal adjuntar el codi, preferiblement en R, amb el que s'ha realitzat la
+neteja, anàlisi i representació de les dades. Si ho preferiu, també
+podeu treballar en Python.
+
+\textbf{Resposta}
+
+\hypertarget{contribucions}{%
+\section{8. Contribucions}\label{contribucions}}
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+Contribucions & Firma\tabularnewline
+\midrule
+\endhead
+Investigació prèvia & Aitor Ferrus Blasco, Alonso López i
+Vicente\tabularnewline
+Redacció de les respostes & Aitor Ferrus Blasco, Alonso López i
+Vicente\tabularnewline
+Desenvolupament codi & Aitor Ferrus Blasco, Alonso López i
+Vicente\tabularnewline
+\bottomrule
+\end{longtable}
+
+\end{document}
