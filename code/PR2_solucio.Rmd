@@ -186,6 +186,7 @@ sort(colMeans(is.na(weatherMelb)), decreasing = TRUE)
 library(VIM)
 weatherMelb_complet <- kNN(weatherMelb)
 weatherMelb <- weatherMelb_complet[0:21]
+weatherMelb_complet <- weatherMelb_complet[0:21]
 ```
 
 
@@ -198,62 +199,115 @@ Selecció dels grups de dades que es volen analitzar/comparar (planificació del
 
 Pendent. Cal establir quines dades utilitzarem per predir la pluja. Cerquem si una (o més) variables ens serveixen per contruir un model que predigui la pluja al dia següent. L'objectiu és determinar si hi ha una relació entre les variables.
 
-Aitor sugeriment:
-Podríem utilitzar la variable date per a crear una variable mesos. Aquesta variable mesos tindrà una gran correlació amb prediuré la pluja el dia seguent, ja que els mesos de pluja la probabilitat augmenta.
-La pressió atmosfèrica + humitat també ens ajudaran. Si la pressió baixa + la humitat augmenta, és un fet clar que una massa d'aire humida s'acosta i pot estar associada a un front de pluges.
-La evaporacio. Quan la massa d'aire no està saturada (humitat relativa del 100%) la quantitat d'aigua evaporada es compensa amb una quantitat d'aigua igual condensada.
-Un altre factor important és el vent, ja que l'aire fred no saturat absorbeix la humitat amb molta eficàcia.
+
+```{r Anàlisi de les dades - Creació variable Month}
+# Creació variable Month
+library(dplyr)
+weatherMelb <- weatherMelb %>% mutate(Month = Date)
+weatherMelb$Month<- months(weatherMelb$Month)
 
 
-```{r Anàlisi de les dades }
-# Podem veure quines variables tenen diferències significatives respecte RainTomorrow
+
+#fifaNet <- fifaNet %>% mutate(Age_Int = case_when(Age<=20  ~ "Junior",
+#                                     Age>=21 & Age<=27   ~ "Middle",
+#                                     Age>=28   ~ "Senior",))
+```
+
+
+```{r Anàlisi de les dades - Selecció dels grups de dades}
+#  Creacio variable mesos
+col <- c(6,7,12,13,14,15,16,17,21,22)
+weatherMelb <- weatherMelb[col]
+```
+
+Hem seleccionat les següents variables:
+1. Humidity
+2. Presure
+3. WindSpeed
+4. Evaporation
+5. Sunshine
+6. Month
+
+
+```{r Anàlisi de les dades - Humidity + Presure }
+# Podem veure com afecten Humidity + Presure amb la probabilitat de pluja
 library(ggplot2)
-p <- ggplot(weatherMelb, aes(RainTomorrow,Humidity3pm))
-p + geom_boxplot()
+ggplot(weatherMelb, mapping = aes(x = Humidity3pm , y = Pressure3pm, color = RainTomorrow) ) + geom_line()
+ggplot(weatherMelb, mapping = aes(x = Humidity9am , y = Pressure9am, color = RainTomorrow) ) + geom_line()
 ```
-```{r Anàlisi de les dades 1 }
-# Podem veure quines variables tenen diferències significatives respecte RainTomorrow
-p <- ggplot(weatherMelb, aes(RainTomorrow,Pressure3pm))
-p + geom_boxplot()
-```
+Si la pressió es baixa i la humitat és alta, és un fet clar que una massa d'aire humida s'acosta i pot estar associada a un front de pluges. Observant els gràfics podem assumir que el que hem dit abans és correcte.
+
+
+```{r Anàlisi de les dades 2 - Humidity + WindSpeed}
+# Podem veure com afecten Humidity + WindSpeed amb la probabilitat de pluja
+ggplot(weatherMelb, mapping = aes(x = Humidity3pm , y = WindSpeed3pm, color = RainTomorrow) ) + geom_line()
+ggplot(weatherMelb, mapping = aes(x = Humidity9am , y = WindSpeed9am, color = RainTomorrow) ) + geom_line()
 
 
 
-```{r Anàlisi de les dades 2 }
-# Podem veure quines variables tenen diferències significatives respecte RainTomorrow
-p <- ggplot(weatherMelb, aes(RainTomorrow,WindSpeed3pm))
-p + geom_boxplot()
+```
+Un altre factor important és el vent, ja que l'aire fred no saturat absorbeix la humitat amb molta eficàcia. Als gràfics mostrats prèviament, podem veure una tendència en la qual velocitats de vent petites amb mesures d'humitats petites donen lloc a la no pluja a l'endemà mentre que com més incrementem aquestes dues variables la probabilitat de pluja sembla augmentar considerablement.
+
+
+```{r Anàlisi de les dades 3 - Humidity + Evaporation }
+# Podem veure com afecten Humidity + Evaporation amb la probabilitat de pluja
+ggplot(weatherMelb, mapping = aes(x = Humidity3pm , y = Evaporation, color = RainTomorrow) ) + geom_line()
+ggplot(weatherMelb, mapping = aes(x = Humidity9am , y = Evaporation, color = RainTomorrow) ) + geom_line()
+
+
+```
+Quan la massa d'aire no està saturada (humitat relativa del 100%) la quantitat d'aigua evaporada es compensa amb una quantitat d'aigua igual condensada. En les nostres dades desafortunadament no tenim la humitat relativa i per tant no podem fer una comparació correcta. A més si observem la gràfica no hi ha cap relació entre la Evaporacio i humitat que provoqui l'augmente de les probabilitats de pluja a l'endemà tan sols podem observar que a més humitat registrada les probabilitats augmenten.
+
+```{r Anàlisi de les dades 4 - Humidity + Sunshine }
+# Podem veure com afecten Humidity + Sunshine amb la probabilitat de pluja
+ggplot(weatherMelb, mapping = aes(x = Humidity3pm , y = Sunshine, color = RainTomorrow) ) + geom_line()
+ggplot(weatherMelb, mapping = aes(x = Humidity9am , y = Sunshine, color = RainTomorrow) ) + geom_line()
+
+```
+En aquest grafic podem observar que a mennys hores de sol i mes humitat, les probabiliyats de plutja al sandema augmenten, mentre que a mes hores de sol i menys humitat es probabiliyats de plutja al sandema disminuixen.
+
+
+```{r Anàlisi de les dades 4 - Month }
+p <- ggplot(data=weatherMelb,aes(x=Month,fill=RainTomorrow))+geom_bar()
+p + theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-```{r Anàlisi de les dades 3 }
-# Podem veure quines variables tenen diferències significatives respecte RainTomorrow
-p <- ggplot(weatherMelb, aes(RainTomorrow,Evaporation))
-p + geom_boxplot()
-```
+Amb el gràfic anterior podem concloure que en Melbourne no hi ha uns mesos específics de pluja, sembla que les precipitacions són similars al llarg de l'any durant els diferents mesos.
 
-```{r Anàlisi de les dades 4 }
-# Podem veure quines variables tenen diferències significatives respecte RainTomorrow
-p <- ggplot(weatherMelb, aes(RainTomorrow,Sunshine))
-p + geom_boxplot()
-```
 ## 4.2. Comprovació de la normalitat i homogeneïtat de la variància.
 
 **Resposta**
 
 Utilitzem el test de Shapiro-Wilk per comprovar la normalitat. Si el pvalor és inferior a 0.05, el nivell de significació, podrem rebutjar la hipòtesi nul·la i concloure que les dades no tenen una distribució normal. En cas contrari, si el pvalor és major que 0.05 podrem concloure que les dades segueixen una distribució normal.
 
-```{r norm1}
-# Suposem que hem escollit la variable
-shapiro.test(weatherMelb$WindSpeed9am)
+```{r norm1 - de totes les variables cuantitatives }
+# Utilitzem el test de Shapiro-Wilk per comprovar la normalitat de totes les variables cuantitatives
+shapiro.test(weatherMelb_complet$MinTemp)
+shapiro.test(weatherMelb_complet$MaxTemp)
+shapiro.test(weatherMelb_complet$Rainfall)
+shapiro.test(weatherMelb_complet$Evaporation)
+shapiro.test(weatherMelb_complet$Sunshine)
+shapiro.test(weatherMelb_complet$WindGustSpeed)
+shapiro.test(weatherMelb_complet$WindSpeed9am)
+shapiro.test(weatherMelb_complet$WindSpeed3pm)
+shapiro.test(weatherMelb_complet$Humidity9am)
+shapiro.test(weatherMelb_complet$Humidity3pm)
+shapiro.test(weatherMelb_complet$Pressure9am)
+shapiro.test(weatherMelb_complet$Pressure3pm)
+shapiro.test(weatherMelb_complet$Temp9am)
+shapiro.test(weatherMelb_complet$Temp3pm)
 
 ```
+
+Cap de les variables segueix una distribució normal. El pvalor calculat és inferior a 0.05, el nivell de significació, així que podem rebutjar la hipòtesi nul·la i concloure que les dades no tenen una distribució normal.
+
 
 Per comprovar la homoscedasticitat, és a dir, la igualtat de variàncies, podem utilitzar el test de Levene si les dades segueixen una distribució normal, o el de Fligner-Killen si les dades no segueixen una distribució normal.
 
 ```{r homo1}
 
 # Utilitzem Fligner-Killen perquè les dades no són normals.
-fligner.test(Rainfall ~ WindSpeed9am, data = weatherMelb)
+fligner.test(Rainfall ~ WindSpeed9am, data = weatherMelb_complet)
 
 ```
 
