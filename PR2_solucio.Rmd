@@ -344,8 +344,25 @@ Podem veure que la variable MinTemp presenta un p-valor superior al nivell de si
 ```
 
 ```{r provest3}
+library(rminer)
+wmc<-weatherMelb_complet
+wmc$RainTomorrow<-as.factor(wmc$RainTomorrow)
+# Cal treure la variable Location ja que té un únic valor i genera un error en train.
+wmc <- subset(wmc, select = - c(Location))
+h<-holdout(wmc$RainTomorrow,ratio=2/3, mode="stratified")
+data_train<-wmc[h$tr,]
+data_test<-wmc[h$ts,]
+
+library(caret)
+train_control<-trainControl(method="cv",number=4)
+mod<-train(RainTomorrow~.,data=data_train,method="rf",trControl=train_control)
+
+pred<-predict(mod, newdata=data_test)
+confusionMatrix(pred,data_test$RainTomorrow,positive="Yes")
 
 ```
+
+Podem veure que el nostre model no és gaire útil, ja que la sensitivitat és inferior a 0.5, cosa que indica la proporció de casos positius detectats respecte el total de casos positius. Per tant, no podem predir si al dia següent plourà mitjançant aquest model.
 
 # 5. Representació dels resultats.
 A partir de taules i gràfiques.
