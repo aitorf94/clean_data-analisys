@@ -439,8 +439,10 @@ A partir de taules i gràfiques.
 
 **Resposta**
 
-```{r result1}
+Les taules i les gràfiques estan incloses en cada apartat reforçant els resultats obtinguts i incloent conclusions extretes a partir d'aquestes.
 
+```{r result1}
+# Gràfic de correlacions?
 ```
 
 # 6. Resolució del problema. 
@@ -448,7 +450,19 @@ A partir dels resultats obtinguts, quines són les conclusions? Els resultats pe
 
 **Resposta**
 
+Dels resultats obtinguts podem treure diverses conclusions. 
 
+El model de Regressió Logística no és capaç de respondre al problema plantejat. El model creat és molt pobre i tan sols podem extreure quines variables com Sunshine, WindSpeed9am, Humidity3pm i Pressure3pm tenen efecte amb el resultat de la variable Raintomorrow. Desafortunadament, aquestes variables no són prou significatives per a crear un model que pugui predir la variable Raintomorrow amb suficient qualitat. Aquestes variables significatives foren prèviament observades durant el anàlisis gràfic de les relacions de les variables amb la variable Raintomorrow.
+
+Cap dels models creats té la suficient qualitat per a respondre al problema. Inclòs utilitzar totes les variables del dataset no som capaços de crear un model que respongui satisfactòriament el problema.
+
+Prèviament, s'han sotmès les dades a un preprocessament per a manejar els casos de zeros
+o elements buits i valors extrems (outliers). Per al cas del primer, s'ha fet ús d'un
+mètode d'imputació de valors (Knn) de tal forma que no hàgim d'eliminar registres
+del conjunt de dades inicial i que l'absència de valors no impliqui arribar a resultats
+poc precisos en les anàlisis. Per al cas del segon, s'ha optat per incloure els valors extrems de les variables Humidity9am, Humidity3pm,
+Pressure9am i Pressure3pm, ja que no hi havia cap indicació de què foren valors erronis i la resta de variables hem optat per convertir en NA els valors extrems
+per a més tard realitzar un altre mètode d'imputació de valors (Knn).
 
 
 # 7. Codi.
