@@ -349,14 +349,28 @@ levels(weatherMelb$RainTomorrow)[levels(weatherMelb$RainTomorrow)=="Yes"] <- "1"
 # Model Regressio logística
 model.logist=glm(formula=RainTomorrow ~ Evaporation+Sunshine+WindSpeed9am+WindSpeed3pm+Humidity9am+Humidity3pm+Pressure9am+Pressure3pm,family=binomial(link=logit),data=weatherMelb)
 summary(model.logist)
+
+# Pred
+prediction<-predict(model.logist, newdata=weatherMelb)
+# taula de confusió
+table(weatherMelb$RainTomorrow,prediction >= 0.5)
 ```
 ```{r provest2 - 1}
-#install.packages("ResourceSelection")
 library(ResourceSelection)
 hoslem.test(as.numeric(weatherMelb$RainTomorrow),fitted(model.logist))
 ```
 
 Segons Hosmer-Lemeshow Goodness of Fit (GOF) Test. El nostre model sembla que no encaixa bé perquè tenim una diferència significativa entre el model i les dades observades (és a dir, el valor p és inferior a 0,05)
+
+Segons la taula de confusió amb valors TN = 2389, TP = 177, FN = 559, FP = 68.
+
+Observant la taula de confusió el nostre model prediu tan sols és capaç de predir el 24% dels casos en el que l'endemà plourà.
+
+"Specificity" o L'especificitat és la proporció de casos correctament classificats entre les respostes negatives. A la taula de confusió, l'especificitat és 68/(68 + 2389) = 2.7 %.
+"Sensitivity" o La sensibilitat és la proporció dels classificats correctament entre els veritables participants que han donat una resposta afirmativa. A la taula de confusió, la sensibilitat és 177/(177 + 559) = 24 %.
+
+Inclús sense haver creat dues dades les de test i d'entrenament, sinó que hem utilitzat les mateixes per a crear el model i per a la predicció. El percentatge de vegades que prediu correctament és molt baix. Per tant, no podem predir si l'endemà plourà mitjançant aquest model.
+
 
 Pel que fa a les variables que són rellevants.
 Observant els z-statitic p-values, podem observar que les variables Sunshine, WindSpeed9am, Humidity3pm i Pressure3pm tenen efecte amb el resultat de la variable Raintomorrow.
@@ -375,8 +389,25 @@ Aquestes dades coincideixen amb el que em conclòs anteriorment mitjançant l'ob
 
 
 ```{r provest3}
+library(rminer)
+wmc<-weatherMelb_complet
+wmc$RainTomorrow<-as.factor(wmc$RainTomorrow)
+# Cal treure la variable Location ja que té un únic valor i genera un error en train.
+wmc <- subset(wmc, select = - c(Location))
+h<-holdout(wmc$RainTomorrow,ratio=2/3, mode="stratified")
+data_train<-wmc[h$tr,]
+data_test<-wmc[h$ts,]
+
+library(caret)
+train_control<-trainControl(method="cv",number=4)
+mod<-train(RainTomorrow~.,data=data_train,method="rf",trControl=train_control)
+
+pred<-predict(mod, newdata=data_test)
+confusionMatrix(pred,data_test$RainTomorrow,positive="Yes")
 
 ```
+
+Podem veure que el nostre model no és gaire útil, ja que la sensitivitat és inferior a 0.5, cosa que indica la proporció de casos positius detectats respecte el total de casos positius. Per tant, no podem predir si al dia següent plourà mitjançant aquest model.
 
 # 5. Representació dels resultats.
 A partir de taules i gràfiques.
