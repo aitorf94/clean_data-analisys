@@ -325,6 +325,8 @@ Per comparar els grups de dades. En funció de les dades i de l’objectiu de l�
 
 **Resposta**
 
+### Contrast d'hipòtesi
+
 Aplicarem una prova per contrast d'hipòtesi de tipus paràmetric, la t de Student, a les variables en que hem comprovat l'homoscedasticitat. En el cas de la distribució de la mitjana d'aquestes variables, segons el teorema central del límit i donat que la mida de la nostra mostra és gran, es pot considerar que segueixen una distribució normal.
 
 ```{r provest1}
@@ -339,6 +341,7 @@ t.test(Temp3pm ~ RainTomorrow, data = weatherMelb_complet)
 
 Podem veure que la variable MinTemp presenta un p-valor superior al nivell de signifcació, cosa que implica que no hi han diferències estadísticament significatves  entre el grup NO i Yes de RainTomorrow. La resta de variables sí que presenten diferències estadísticament significatives.
 
+### Regressió logística
 
 Al seguent apartat anem a realitzar un model de Regressio logística.
 ```{r provest2}
@@ -387,6 +390,9 @@ Pressure3pm -9.146e-02. La variable WindSpeed afecta negativament, és a dir qua
 
 Aquestes dades coincideixen amb el que em conclòs anteriorment mitjançant l'observació de les gràfiques.
 
+### Random Forest
+
+A continuació executarem un mètode de classificació, el random forest. Posteriorment farem una predicció del resultat de lel model i ho validarem mitjançant una matriu de confusió.
 
 ```{r provest3}
 library(rminer)
@@ -398,12 +404,31 @@ h<-holdout(wmc$RainTomorrow,ratio=2/3, mode="stratified")
 data_train<-wmc[h$tr,]
 data_test<-wmc[h$ts,]
 
+# Farem una validació creuada amb 4 folds.
 library(caret)
 train_control<-trainControl(method="cv",number=4)
 mod<-train(RainTomorrow~.,data=data_train,method="rf",trControl=train_control)
 
 pred<-predict(mod, newdata=data_test)
 confusionMatrix(pred,data_test$RainTomorrow,positive="Yes")
+# Visualització de la matriu de confusió
+
+library(ggplot2)
+library(dplyr)
+
+table <- data.frame(confusionMatrix(pred,data_test$RainTomorrow,positive="Yes")$table)
+
+plotTable <- table %>%
+  mutate(Bo_Dolent = ifelse(table$Prediction == table$Reference, "bo", "dolent")) %>%
+  group_by(Reference) %>%
+  mutate(Propor = Freq/sum(Freq))
+
+ggplot(data = plotTable, mapping = aes(x = Reference, y = Prediction, fill = Bo_Dolent, alpha = Propor)) +
+  geom_tile() +
+  geom_text(aes(label = Freq), vjust = .5, fontface  = "bold", alpha = 1) +
+  scale_fill_manual(values = c(bo = "green", dolent = "red")) +
+  theme_bw() +
+  xlim(rev(levels(table$Reference)))
 
 ```
 
