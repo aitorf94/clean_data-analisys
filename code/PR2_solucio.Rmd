@@ -358,6 +358,7 @@ prediction<-predict(model.logist, newdata=weatherMelb)
 # taula de confusió
 table(weatherMelb$RainTomorrow,prediction >= 0.5)
 ```
+
 ```{r provest2 - 1}
 library(ResourceSelection)
 hoslem.test(as.numeric(weatherMelb$RainTomorrow),fitted(model.logist))
@@ -440,9 +441,20 @@ A partir de taules i gràfiques.
 **Resposta**
 
 Les taules i les gràfiques estan incloses en cada apartat reforçant els resultats obtinguts i incloent conclusions extretes a partir d'aquestes.
+Evidentment, podríem afegir molts gràfics relacionats amb aquestes dades, com ara els gràfics de correlacions següents que mostren les correlacions entre cada parell de variables nimèriques del conjunt de dades o clusteritzar el conjunt de dades jeràrquicament.
 
 ```{r result1}
-# Gràfic de correlacions?
+
+library(corrplot)
+# Gràfic de correlacions
+wmcorr<-weatherMelb_complet
+#Treiem les variables no numèriques
+wmcorr<-subset(wmcorr, select = - c(Date,Location,WindGustDir,WindDir9am,WindDir3pm,RainToday,RainTomorrow))
+
+corr.wmcorr<-cor(wmcorr)
+corrplot(corr.wmcorr,method="circle")
+
+corrplot(corr.wmcorr, order = "hclust", addrect = 3)
 ```
 
 # 6. Resolució del problema. 
@@ -469,6 +481,8 @@ per a més tard realitzar un altre mètode d'imputació de valors (Knn).
 Cal adjuntar el codi, preferiblement en R, amb el que s’ha realitzat la neteja, anàlisi i representació de les dades. Si ho preferiu, també podeu treballar en Python.
 
 **Resposta**
+
+El codi es troba incrustat en cada apartat de la pràctica.
 
 # 8. Contribucions
 
