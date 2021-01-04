@@ -171,6 +171,7 @@ weatherMelb$MaxTemp <- sapply(weatherMelb$MaxTemp, function(x) ifelse(x>35, NA, 
 weatherMelb$Temp9am <- sapply(weatherMelb$Temp9am, function(x) ifelse(x>25, NA, x))
 weatherMelb$Temp3pm <- sapply(weatherMelb$Temp3pm, function(x) ifelse(x>32, NA, x))
 
+
 # Evaporation
 weatherMelb$Evaporation <- sapply(weatherMelb$Evaporation, function(x) ifelse(x>12, NA, x))
 ```
@@ -198,7 +199,7 @@ Selecció dels grups de dades que es volen analitzar/comparar (planificació del
 
 **Resposta**
 
-Pendent. Cal establir quines dades utilitzarem per predir la pluja. Cerquem si una (o més) variables ens serveixen per contruir un model que predigui la pluja al dia següent. L'objectiu és determinar si hi ha una relació entre les variables.
+Cal establir quines dades utilitzarem per predir la pluja. Cerquem si una (o més) variables ens serveixen per contruir un model que predigui la pluja al dia següent. L'objectiu és determinar si hi ha una relació entre les variables.
 
 
 ```{r analis1}
@@ -217,6 +218,7 @@ weatherMelb <- weatherMelb[col]
 ```
 
 Hem seleccionat les següents variables:
+
 1. Humidity
 2. Presure
 3. WindSpeed
@@ -228,16 +230,20 @@ Hem seleccionat les següents variables:
 ```{r analisi3}
 # Podem veure com afecten Humidity + Presure amb la probabilitat de pluja
 library(ggplot2)
-ggplot(weatherMelb, mapping = aes(x = Humidity3pm , y = Pressure3pm, color = RainTomorrow) ) + geom_line()
-ggplot(weatherMelb, mapping = aes(x = Humidity9am , y = Pressure9am, color = RainTomorrow) ) + geom_line()
+ggplot(weatherMelb, mapping = aes(x = Humidity3pm , y = Pressure3pm, color = RainTomorrow) ) + 
+  geom_line()
+ggplot(weatherMelb, mapping = aes(x = Humidity9am , y = Pressure9am, color = RainTomorrow) ) + 
+  geom_line()
 ```
 Si la pressió es baixa i la humitat és alta, és un fet clar que una massa d'aire humida s'acosta i pot estar associada a un front de pluges. Observant els gràfics podem assumir que el que hem dit abans és correcte.
 
 
 ```{r analisi4}
 # Podem veure com afecten Humidity + WindSpeed amb la probabilitat de pluja
-ggplot(weatherMelb, mapping = aes(x = Humidity3pm , y = WindSpeed3pm, color = RainTomorrow) ) + geom_line()
-ggplot(weatherMelb, mapping = aes(x = Humidity9am , y = WindSpeed9am, color = RainTomorrow) ) + geom_line()
+ggplot(weatherMelb, mapping = aes(x = Humidity3pm , y = WindSpeed3pm, color = RainTomorrow) ) + 
+  geom_line()
+ggplot(weatherMelb, mapping = aes(x = Humidity9am , y = WindSpeed9am, color = RainTomorrow) ) + 
+  geom_line()
 
 
 
@@ -247,8 +253,10 @@ Un altre factor important és el vent, ja que l'aire fred no saturat absorbeix l
 
 ```{r analisi5}
 # Podem veure com afecten Humidity + Evaporation amb la probabilitat de pluja
-ggplot(weatherMelb, mapping = aes(x = Humidity3pm , y = Evaporation, color = RainTomorrow) ) + geom_line()
-ggplot(weatherMelb, mapping = aes(x = Humidity9am , y = Evaporation, color = RainTomorrow) ) + geom_line()
+ggplot(weatherMelb, mapping = aes(x = Humidity3pm , y = Evaporation, color = RainTomorrow) ) + 
+  geom_line()
+ggplot(weatherMelb, mapping = aes(x = Humidity9am , y = Evaporation, color = RainTomorrow) ) + 
+  geom_line()
 
 
 ```
@@ -256,8 +264,10 @@ Quan la massa d'aire no està saturada (humitat relativa del 100%) la quantitat 
 
 ```{r analisi6}
 # Podem veure com afecten Humidity + Sunshine amb la probabilitat de pluja
-ggplot(weatherMelb, mapping = aes(x = Humidity3pm , y = Sunshine, color = RainTomorrow) ) + geom_line()
-ggplot(weatherMelb, mapping = aes(x = Humidity9am , y = Sunshine, color = RainTomorrow) ) + geom_line()
+ggplot(weatherMelb, mapping = aes(x = Humidity3pm , y = Sunshine, color = RainTomorrow) ) + 
+  geom_line()
+ggplot(weatherMelb, mapping = aes(x = Humidity9am , y = Sunshine, color = RainTomorrow) ) + 
+  geom_line()
 
 ```
 En aquest grafic podem observar que a mennys hores de sol i mes humitat, les probabiliyats de plutja al sandema augmenten, mentre que a mes hores de sol i menys humitat es probabiliyats de plutja al sandema disminuixen.
@@ -350,7 +360,9 @@ levels(weatherMelb$RainTomorrow)[levels(weatherMelb$RainTomorrow)=="No"] <- "0"
 levels(weatherMelb$RainTomorrow)[levels(weatherMelb$RainTomorrow)=="Yes"] <- "1"
 
 # Model Regressio logística
-model.logist=glm(formula=RainTomorrow ~ Evaporation+Sunshine+WindSpeed9am+WindSpeed3pm+Humidity9am+Humidity3pm+Pressure9am+Pressure3pm,family=binomial(link=logit),data=weatherMelb)
+model.logist=glm(formula=RainTomorrow ~ Evaporation+Sunshine+WindSpeed9am+
+                   WindSpeed3pm+Humidity9am+Humidity3pm+Pressure9am+
+                   Pressure3pm,family=binomial(link=logit),data=weatherMelb)
 summary(model.logist)
 
 # Pred
@@ -449,7 +461,8 @@ library(corrplot)
 # Gràfic de correlacions
 wmcorr<-weatherMelb_complet
 #Treiem les variables no numèriques
-wmcorr<-subset(wmcorr, select = - c(Date,Location,WindGustDir,WindDir9am,WindDir3pm,RainToday,RainTomorrow))
+wmcorr<-subset(wmcorr, select = - c(Date,Location,WindGustDir,WindDir9am,
+                                    WindDir3pm,RainToday,RainTomorrow))
 
 corr.wmcorr<-cor(wmcorr)
 corrplot(corr.wmcorr,method="circle")
@@ -476,6 +489,16 @@ poc precisos en les anàlisis. Per al cas del segon, s'ha optat per incloure els
 Pressure9am i Pressure3pm, ja que no hi havia cap indicació de què foren valors erronis i la resta de variables hem optat per convertir en NA els valors extrems
 per a més tard realitzar un altre mètode d'imputació de valors (Knn).
 
+
+
+
+
+
+```{r outcsv1}
+
+# El fitxer CSV amb les dades finals analitzades.
+write.csv(weatherMelb,"../data/weatherMelb.csv", row.names = FALSE)
+```
 
 # 7. Codi.
 Cal adjuntar el codi, preferiblement en R, amb el que s’ha realitzat la neteja, anàlisi i representació de les dades. Si ho preferiu, també podeu treballar en Python.
